@@ -54,6 +54,17 @@ const setStyleCustom = (
       gradient.addColorStop(0, "#FBAB7E");
       gradient.addColorStop(1, "#F7CE68");
       break;
+    case "red_set":
+      gradient = context.createLinearGradient(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+      );
+      gradient.addColorStop(0, "#FFE53B");
+      gradient.addColorStop(0.74, "#FF2525"); // Adjust the position based on your preference
+
+      break;
     default:
       // Handle the default case or provide a default gradient
       gradient = context.createLinearGradient(
