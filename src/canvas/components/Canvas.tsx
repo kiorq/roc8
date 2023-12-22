@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { DrawableBackground, DrawableElement } from "../../elements";
-import { drawElements } from "../../drawers/drawingEngine";
+import { drawElements } from "../../drawers/engine";
 
 interface Props {
   width: number;
@@ -15,7 +15,19 @@ const Canvas = (props: Props) => {
       style: "style:peachy_sunset",
     },
   });
-  const [elements, setElements] = useState<DrawableElement[]>([]);
+  const [elements, setElements] = useState<DrawableElement[]>([
+    {
+      type: "text",
+      attrs: {
+        value: "Hello world",
+        fontFamily: "Arial",
+        fontSize: 50,
+        align: "center",
+        color: "black",
+      },
+      pos: { x: 200, y: 200 },
+    },
+  ]);
 
   useEffect(() => {
     if (canvasRef.current) {

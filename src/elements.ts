@@ -2,16 +2,16 @@ export interface DrawableElementBase {
   type: string;
   attrs: Record<string, string | number>;
   pos: { x: number; y: number };
-  size: { w: number; h: number };
 }
 
 export interface DrawableText extends DrawableElementBase {
   type: "text";
   attrs: {
     value: string;
+    color: string;
+    align: "center" | "left" | "right";
     fontSize: number;
     fontFamily: string;
-    [key: string]: string | number;
   };
 }
 
@@ -28,8 +28,7 @@ export interface DrawableImage extends DrawableElementBase {
 type SupportedColor = string;
 type CustomStyle = string;
 
-export interface DrawableBackground
-  extends Omit<DrawableElementBase, "pos" | "size"> {
+export interface DrawableBackground extends Omit<DrawableElementBase, "pos"> {
   type: "background";
   attrs: {
     style: `color:${SupportedColor}` | `style:${CustomStyle}`;
