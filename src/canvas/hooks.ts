@@ -46,6 +46,14 @@ const useCanvas = (props: { width: number; height: number }) => {
   }, [canvasRef, bgElement, elements, props.width, props.height]);
 
   /**
+   * if the browsers resizes stop dragging
+   */
+  useEffect(() => {
+    setDraggingElementIndex(undefined);
+    setDraggingElementOffset({ x: 0, y: 0 });
+  }, [props.width, props.height]);
+
+  /**
    * change background of canvas by iterating through ALLOWED_BACKGROUND_STYLES
    */
   const onBackgroundChange = useCallback(() => {
