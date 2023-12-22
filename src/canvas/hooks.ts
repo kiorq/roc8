@@ -2,32 +2,23 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { DrawableBackground, DrawableElement } from "../elements";
 import { drawElements } from "../drawers/engine";
 import { makeDrawableText } from "../drawers/text";
+import {
+  ALLOWED_BACKGROUND_STYLES,
+  makeDrawableBackground,
+} from "../drawers/background";
 
 interface CanvasOptions {
   width: number;
   height: number;
 }
 
-const BACKGROUND_STYLES: DrawableBackground["attrs"]["style"][] = [
-  "style:peachy_sunset",
-  "style:cayman_blue",
-  "style:lemon_burst",
-  "style:red_set",
-  "color:#393E40",
-  "color:#0F0A0A",
-  "color:#F5F7EC",
-  "color:#0BBDFB",
-  "color:#03C56B",
-];
-
 const useCanvas = (props: CanvasOptions) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [bgElement, setBgElement] = useState<DrawableBackground>({
-    type: "background",
-    attrs: {
+  const [bgElement, setBgElement] = useState<DrawableBackground>(
+    makeDrawableBackground({
       style: "style:peachy_sunset",
-    },
-  });
+    })
+  );
   const [elements, setElements] = useState<DrawableElement[]>([]);
 
   useEffect(() => {
@@ -37,15 +28,16 @@ const useCanvas = (props: CanvasOptions) => {
   }, [canvasRef, bgElement, elements, props.width, props.height]);
 
   const onBackgroundChange = useCallback(() => {
-    const nextIndex = BACKGROUND_STYLES.indexOf(bgElement.attrs.style) + 1;
-    const nextStyle = BACKGROUND_STYLES[nextIndex] || BACKGROUND_STYLES[0];
+    const nextIndex =
+      ALLOWED_BACKGROUND_STYLES.indexOf(bgElement.attrs.style) + 1;
+    const nextStyle =
+      ALLOWED_BACKGROUND_STYLES[nextIndex] || ALLOWED_BACKGROUND_STYLES[0];
 
-    setBgElement({
-      type: "background",
-      attrs: {
+    setBgElement(
+      makeDrawableBackground({
         style: nextStyle,
-      },
-    });
+      })
+    );
   }, [bgElement.attrs.style]);
 
   const onAddText = () => {
@@ -53,7 +45,7 @@ const useCanvas = (props: CanvasOptions) => {
       ...elements,
       makeDrawableText(canvasRef.current!, {
         value:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.",
         fontFamily: "Arial",
         fontSize: 20,
         align: "left",

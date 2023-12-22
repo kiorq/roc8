@@ -4,6 +4,28 @@
  */
 import { DrawableBackground } from "../elements";
 
+export const ALLOWED_BACKGROUND_STYLES: DrawableBackground["attrs"]["style"][] =
+  [
+    "style:peachy_sunset",
+    "style:cayman_blue",
+    "style:lemon_burst",
+    "style:red_set",
+    "color:#393E40",
+    "color:#0F0A0A",
+    "color:#F5F7EC",
+    "color:#0BBDFB",
+    "color:#03C56B",
+  ];
+
+export const makeDrawableBackground = (
+  elementAttrs: DrawableBackground["attrs"]
+): DrawableBackground => ({
+  type: "background",
+  attrs: {
+    ...elementAttrs,
+  },
+});
+
 const getStyle = (
   style: DrawableBackground["attrs"]["style"]
 ): [string, string] => {
