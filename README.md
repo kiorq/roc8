@@ -2,7 +2,7 @@
 
 ![Screenshot](/public/ss.png)
 
-This is web implementation of instagrams story maker. This tackles static image generation using the Canvas API because honestly I just wanted an easier way to create quotes wallpapers without needing to use instagram. It is still in progress and if you see this, i expect to get it done real soon. Once done it will go live.
+This is web implementation of instagrams story maker. This tackles static image generation using the Canvas API because honestly I just wanted an easier way to create quotes wallpapers without needing to use instagram. It is still in progress and if you see this, expect it to be online soon.
 
 ## RoadMap
 
