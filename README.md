@@ -4,7 +4,7 @@
 
 This is web implementation of instagrams story maker. This tackles static image generation using the Canvas API because honestly I just wanted an easier way to create quotes wallpapers without needing to use instagram. It is still in progress and if you see this, expect it to be online soon.
 
-## RoadMap
+## Road Map
 
 Goal: In the near feature you should...
 
@@ -15,4 +15,5 @@ Goal: In the near feature you should...
 - [ ] Upload images
 - [ ] Change text (content, font, size)
 - [ ] Scale any element (zoom with pinch)
+- [ ] Desktop support
 - [ ] Re-use templates
