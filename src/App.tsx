@@ -27,9 +27,9 @@ function App() {
     onAddText,
     onDownload,
     onCanvasClick,
-    onCanvasTouchStart,
-    onCanvasTouchMove,
-    onCanvasTouchEnd,
+    onCanvasDragStart,
+    onCanvasDragMove,
+    onCanvasDragEnd,
   } = useCanvas({
     width: containerWidth,
     height: containerHeight,
@@ -51,9 +51,9 @@ function App() {
           width={containerWidth}
           height={containerHeight}
           onClick={onCanvasClick}
-          onTouchStart={onCanvasTouchStart}
-          onTouchMove={onCanvasTouchMove}
-          onTouchEnd={onCanvasTouchEnd}
+          onDragStart={onCanvasDragStart}
+          onDragMove={onCanvasDragMove}
+          onDragEnd={onCanvasDragEnd}
         />
       </div>
     </div>

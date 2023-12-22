@@ -14,6 +14,7 @@ import {
   makeDrawableBackground,
 } from "../drawers/background";
 import { findSelectedDrawableElement } from "./mouse";
+import { Position } from "./position";
 
 const useCanvas = (props: { width: number; height: number }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -110,21 +111,21 @@ const useCanvas = (props: { width: number; height: number }) => {
     [elements]
   );
 
-  const onCanvasTouchStart = useCallback(
-    (event: TouchEvent<HTMLCanvasElement>) => {
+  const onCanvasDragStart = useCallback(
+    (pos: Position) => {
       if (canvasRef.current) {
         const { selectedIndex, selectedElement } = findSelectedDrawableElement(
           canvasRef.current,
           elements,
-          event.touches[0].clientX,
-          event.touches[0].clientY
+          pos.x,
+          pos.y
         );
         if (typeof selectedIndex == "number" && selectedElement) {
           console.debug("Dragging started", { selectedIndex, selectedElement });
           setDraggingElementIndex(selectedIndex);
           setDraggingElementOffset({
-            x: event.touches[0].clientX - selectedElement.pos.x,
-            y: event.touches[0].clientY - selectedElement.pos.y,
+            x: pos.x - selectedElement.pos.x,
+            y: pos.y - selectedElement.pos.y,
           });
         }
       }
@@ -132,16 +133,16 @@ const useCanvas = (props: { width: number; height: number }) => {
     [canvasRef, elements]
   );
 
-  const onCanvasTouchMove = useCallback(
-    (event: TouchEvent<HTMLCanvasElement>) => {
+  const onCanvasDragMove = useCallback(
+    (pos: Position) => {
       if (typeof draggingElementIndex == "number") {
         // update elements
         setElements((oldElements) => {
           const updatedElements = [...oldElements];
           updatedElements[draggingElementIndex].pos.x =
-            event.touches[0].clientX - draggingElementOffset.x;
+            pos.x - draggingElementOffset.x;
           updatedElements[draggingElementIndex].pos.y =
-            event.touches[0].clientY - draggingElementOffset.y;
+            pos.y - draggingElementOffset.y;
           return updatedElements;
         });
       }
@@ -149,7 +150,7 @@ const useCanvas = (props: { width: number; height: number }) => {
     [draggingElementIndex, draggingElementOffset]
   );
 
-  const onCanvasTouchEnd = useCallback(() => {
+  const onCanvasDragEnd = useCallback(() => {
     if (typeof draggingElementIndex == "number") {
       console.debug("Dragging ended");
       setDraggingElementIndex(undefined);
@@ -163,9 +164,9 @@ const useCanvas = (props: { width: number; height: number }) => {
     onAddText,
     onDownload,
     onCanvasClick,
-    onCanvasTouchStart,
-    onCanvasTouchMove,
-    onCanvasTouchEnd,
+    onCanvasDragStart,
+    onCanvasDragMove,
+    onCanvasDragEnd,
   };
 };
 

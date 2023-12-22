@@ -12,8 +12,8 @@ Goal: In the near feature you should...
 - [x] Add text
 - [x] Move any element
 - [x] Download your work
+- [x] Desktop support
+- [ ] Scale any element (zoom with pinch)
 - [ ] Upload images
 - [ ] Change text (content, font, size)
-- [ ] Scale any element (zoom with pinch)
-- [ ] Desktop support
 - [ ] Re-use templates
