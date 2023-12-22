@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { DrawableBackground, DrawableElement } from "../elements";
 import { drawElements } from "../drawers/engine";
+import { makeDrawableText } from "../drawers/text";
 
 interface CanvasOptions {
   width: number;
@@ -50,23 +51,20 @@ const useCanvas = (props: CanvasOptions) => {
   const onAddText = () => {
     setElements((elements) => [
       ...elements,
-      {
-        type: "text",
-        attrs: {
-          value: "Hello world",
-          fontFamily: "Arial",
-          fontSize: 50,
-          align: "center",
-          color: "black",
-        },
-        pos: { x: 200, y: Math.floor(Math.random() * (700 - 200 + 1) + 200) },
-      },
+      makeDrawableText(canvasRef.current!, {
+        value:
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        fontFamily: "Arial",
+        fontSize: 20,
+        align: "left",
+        color: "black",
+      }),
     ]);
   };
 
   const onDownload = () => {
     const link = document.createElement("a");
-    link.download = "filename.png";
+    link.download = "download.png";
     link.href = canvasRef.current?.toDataURL() || "";
     link.click();
   };

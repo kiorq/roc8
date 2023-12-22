@@ -2,6 +2,7 @@ export interface DrawableElementBase {
   type: string;
   attrs: Record<string, string | number>;
   pos: { x: number; y: number };
+  layout: { dimensions: { width: number; height: number } };
 }
 
 export interface DrawableText extends DrawableElementBase {
@@ -12,6 +13,13 @@ export interface DrawableText extends DrawableElementBase {
     align: "center" | "left" | "right";
     fontSize: number;
     fontFamily: string;
+  };
+  layout: {
+    dimensions: DrawableElementBase["layout"]["dimensions"];
+    text: {
+      lines: string[];
+      lineHeight: number;
+    };
   };
 }
 
@@ -28,7 +36,8 @@ export interface DrawableImage extends DrawableElementBase {
 type SupportedColor = string;
 type CustomStyle = string;
 
-export interface DrawableBackground extends Omit<DrawableElementBase, "pos"> {
+export interface DrawableBackground
+  extends Omit<DrawableElementBase, "pos" | "layout"> {
   type: "background";
   attrs: {
     style: `color:${SupportedColor}` | `style:${CustomStyle}`;
