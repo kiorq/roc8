@@ -21,7 +21,13 @@ function App() {
     return () => window.removeEventListener("resize", handleResize);
   }, [handleResize]);
 
-  const { canvasRef, onBackgroundChange, onAddText, onDownload } = useCanvas({
+  const {
+    canvasRef,
+    onBackgroundChange,
+    onAddText,
+    onDownload,
+    onCanvasClick,
+  } = useCanvas({
     width: containerWidth,
     height: containerHeight,
   });
@@ -41,6 +47,7 @@ function App() {
           canvasRef={canvasRef}
           width={containerWidth}
           height={containerHeight}
+          onClick={onCanvasClick}
         />
       </div>
     </div>

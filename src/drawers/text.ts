@@ -1,7 +1,7 @@
 import { DrawableText } from "../elements";
 
 const TEXT_MAX_WIDTH_SAFETY_MARGIN = 150;
-const LINE_SPACING = 20;
+const LINE_SPACING = 15;
 
 /**
  * makes a drawbable text based on attrs, text layout is automatically deterimed
@@ -54,8 +54,10 @@ export const makeDrawableText = (
     lines.push(currentLine);
   }
 
+  const lineHeightWithSpacing = lineHeight + LINE_SPACING;
+
   // Determine width and height
-  const height = lines.length * lineHeight;
+  const height = lines.length * lineHeightWithSpacing;
 
   return {
     type: "text",
@@ -66,7 +68,7 @@ export const makeDrawableText = (
     layout: {
       text: {
         lines,
-        lineHeight: lineHeight + LINE_SPACING,
+        lineHeight: lineHeightWithSpacing,
       },
       dimensions: {
         width: linesWidth,
@@ -89,7 +91,7 @@ export const drawText = (
   const currPosX = element.pos.x;
   let currPosY = element.pos.y + element.layout.text.lineHeight;
 
-  for (let line of element.layout.text.lines) {
+  for (const line of element.layout.text.lines) {
     // Draw the line
     context.fillText(line, currPosX, currPosY);
     currPosY += element.layout.text.lineHeight;

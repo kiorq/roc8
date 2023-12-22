@@ -36,8 +36,7 @@ export interface DrawableImage extends DrawableElementBase {
 type SupportedColor = string;
 type CustomStyle = string;
 
-export interface DrawableBackground
-  extends Omit<DrawableElementBase, "pos" | "layout"> {
+export interface DrawableBackground extends DrawableElementBase {
   type: "background";
   attrs: {
     style: `color:${SupportedColor}` | `style:${CustomStyle}`;
