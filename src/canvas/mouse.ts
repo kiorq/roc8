@@ -1,4 +1,3 @@
-import { MouseEvent } from "react";
 import { DrawableElement } from "../elements";
 
 /**
@@ -36,11 +35,12 @@ interface SelectionResult {
 export const findSelectedDrawableElement = (
   canvas: HTMLCanvasElement,
   elements: DrawableElement[],
-  e: MouseEvent<HTMLCanvasElement>
+  clientX: number,
+  clientY: number
 ): SelectionResult => {
   const rect = canvas.getBoundingClientRect();
-  const mouseX = e.clientX - rect.left;
-  const mouseY = e.clientY - rect.top;
+  const mouseX = clientX - rect.left;
+  const mouseY = clientY - rect.top;
 
   for (let i = elements.length - 1; i >= 0; i--) {
     const currentElement = elements[i];
@@ -55,10 +55,6 @@ export const findSelectedDrawableElement = (
       const selectedElement = currentElement;
       const selectedIndex = i;
 
-      console.debug("Cavans Element Selected", {
-        selectedElement,
-        selectedIndex,
-      });
       return { selectedElement, selectedIndex };
     }
   }

@@ -1,4 +1,11 @@
-import { MouseEvent, useCallback, useEffect, useRef, useState } from "react";
+import {
+  MouseEvent,
+  TouchEvent,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { DrawableBackground, DrawableElement } from "../elements";
 import { drawElements } from "../drawers/engine";
 import { makeDrawableText } from "../drawers/text";
@@ -8,19 +15,22 @@ import {
 } from "../drawers/background";
 import { findSelectedDrawableElement } from "./mouse";
 
-interface CanvasOptions {
-  width: number;
-  height: number;
-}
-
-const useCanvas = (props: CanvasOptions) => {
+const useCanvas = (props: { width: number; height: number }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  // background element, used as first thing drawn on canvas
   const [bgElement, setBgElement] = useState<DrawableBackground>(
     makeDrawableBackground({
       style: "style:peachy_sunset",
     })
   );
+  // elements drawn on the canvas
   const [elements, setElements] = useState<DrawableElement[]>([]);
+  // dragging tracking
+  const [draggingElementIndex, setDraggingElementIndex] = useState<number>();
+  const [draggingElementOffset, setDraggingElementOffset] = useState({
+    x: 0,
+    y: 0,
+  });
 
   /**
    * redraws elements on canvas any of the following states changes
@@ -83,7 +93,8 @@ const useCanvas = (props: CanvasOptions) => {
         const { selectedIndex } = findSelectedDrawableElement(
           canvasRef.current,
           elements,
-          event
+          event.clientX,
+          event.clientY
         );
         // move element to the front, if it is not already
         if (selectedIndex && selectedIndex != elements.length - 1) {
@@ -99,12 +110,62 @@ const useCanvas = (props: CanvasOptions) => {
     [elements]
   );
 
+  const onCanvasTouchStart = useCallback(
+    (event: TouchEvent<HTMLCanvasElement>) => {
+      if (canvasRef.current) {
+        const { selectedIndex, selectedElement } = findSelectedDrawableElement(
+          canvasRef.current,
+          elements,
+          event.touches[0].clientX,
+          event.touches[0].clientY
+        );
+        if (typeof selectedIndex == "number" && selectedElement) {
+          console.debug("Dragging started", { selectedIndex, selectedElement });
+          setDraggingElementIndex(selectedIndex);
+          setDraggingElementOffset({
+            x: event.touches[0].clientX - selectedElement.pos.x,
+            y: event.touches[0].clientY - selectedElement.pos.y,
+          });
+        }
+      }
+    },
+    [canvasRef, elements]
+  );
+
+  const onCanvasTouchMove = useCallback(
+    (event: TouchEvent<HTMLCanvasElement>) => {
+      if (typeof draggingElementIndex == "number") {
+        // update elements
+        setElements((oldElements) => {
+          const updatedElements = [...oldElements];
+          updatedElements[draggingElementIndex].pos.x =
+            event.touches[0].clientX - draggingElementOffset.x;
+          updatedElements[draggingElementIndex].pos.y =
+            event.touches[0].clientY - draggingElementOffset.y;
+          return updatedElements;
+        });
+      }
+    },
+    [draggingElementIndex, draggingElementOffset]
+  );
+
+  const onCanvasTouchEnd = useCallback(() => {
+    if (typeof draggingElementIndex == "number") {
+      console.debug("Dragging ended");
+      setDraggingElementIndex(undefined);
+      setDraggingElementOffset({ x: 0, y: 0 });
+    }
+  }, [draggingElementIndex]);
+
   return {
     canvasRef,
     onBackgroundChange,
     onAddText,
     onDownload,
     onCanvasClick,
+    onCanvasTouchStart,
+    onCanvasTouchMove,
+    onCanvasTouchEnd,
   };
 };
 

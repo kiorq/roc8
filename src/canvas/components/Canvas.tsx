@@ -3,6 +3,9 @@ interface Props {
   width: number;
   height: number;
   onClick: React.MouseEventHandler<HTMLCanvasElement>;
+  onTouchStart: React.TouchEventHandler<HTMLCanvasElement>;
+  onTouchMove: React.TouchEventHandler<HTMLCanvasElement>;
+  onTouchEnd: React.TouchEventHandler<HTMLCanvasElement>;
 }
 
 const Canvas = (props: Props) => {
@@ -12,7 +15,9 @@ const Canvas = (props: Props) => {
       width={props.width}
       height={props.height}
       onClick={props.onClick}
-      className="bg-white"
+      onTouchStart={props.onTouchStart}
+      onTouchMove={props.onTouchMove}
+      onTouchEnd={props.onTouchEnd}
     ></canvas>
   );
 };

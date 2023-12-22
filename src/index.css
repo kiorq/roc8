@@ -8,4 +8,7 @@ body {
     rgba(255, 244, 228, 1) 7.1%,
     rgba(240, 246, 238, 1) 67.4%
   );
+
+  overscroll-behavior-y: none;
+  overscroll-behavior-x: none;
 }
