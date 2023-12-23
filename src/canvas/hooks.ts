@@ -1,11 +1,4 @@
-import {
-  MouseEvent,
-  TouchEvent,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { MouseEvent, useCallback, useEffect, useRef, useState } from "react";
 import { DrawableBackground, DrawableElement } from "../elements";
 import { drawElements } from "../drawers/engine";
 import { makeDrawableText } from "../drawers/text";

@@ -36,7 +36,7 @@ function App() {
   });
 
   return (
-    <div className="w-screen h-screen max-w-[700px] mx-auto md:p-12 md:pt-6">
+    <div className="w-screen h-[100dvh] max-w-[700px] mx-auto flex flex-col">
       <Toolbar
         onBackgroundChange={onBackgroundChange}
         onAddText={onAddText}
@@ -44,7 +44,7 @@ function App() {
       />
       <div
         ref={containerRef}
-        className="shadow-2xl w-full h-full overflow-hidden md:rounded-3xl"
+        className="shadow-2xl w-full flex-grow overflow-hidden md:rounded-3xl md:mb-5"
       >
         <Canvas
           canvasRef={canvasRef}
