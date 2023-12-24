@@ -7,7 +7,7 @@ interface Props {
   onClick: React.MouseEventHandler<HTMLCanvasElement>;
   onDragStart: (pos: Position) => void;
   onDragMove: (pos: Position) => void;
-  onDragEnd: (pos: Position) => void;
+  onDragEnd: () => void;
 }
 
 const Canvas = (props: Props) => {
@@ -27,10 +27,8 @@ const Canvas = (props: Props) => {
   };
   const onTouchEnd = (event: React.TouchEvent<HTMLCanvasElement>) => {
     event.stopPropagation();
-    props.onDragEnd({
-      x: event.touches[0].clientX,
-      y: event.touches[0].clientY,
-    });
+
+    props.onDragEnd();
   };
 
   const onMouseDown = (event: React.MouseEvent<HTMLCanvasElement>) => {
@@ -49,10 +47,7 @@ const Canvas = (props: Props) => {
   };
   const onMouseUp = (event: React.MouseEvent<HTMLCanvasElement>) => {
     event.stopPropagation();
-    props.onDragEnd({
-      x: event.clientX,
-      y: event.clientY,
-    });
+    props.onDragEnd();
   };
 
   return (

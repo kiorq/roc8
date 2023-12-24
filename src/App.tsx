@@ -3,11 +3,13 @@ import Canvas from "./canvas/components/Canvas";
 import "./index.css";
 import Toolbar from "./canvas/components/Toolbar";
 import useCanvas from "./canvas/hooks";
+import TextEditor from "./components/TextEditor";
 
 function App() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [containerWidth, setContainerWidth] = useState(0);
   const [containerHeight, setContainerHeight] = useState(0);
+  const [showTextEditor, setShowTextEditor] = useState(false);
 
   const handleResize = useCallback(() => {
     setContainerWidth(containerRef?.current?.clientWidth || 0);
@@ -24,7 +26,7 @@ function App() {
   const {
     canvasRef,
     onBackgroundChange,
-    onAddText,
+    onAddElement,
     onDownload,
     onCanvasClick,
     onCanvasDragStart,
@@ -37,9 +39,16 @@ function App() {
 
   return (
     <div className="w-screen h-[100dvh] max-w-[700px] mx-auto flex flex-col">
+      {showTextEditor && (
+        <TextEditor
+          canvasRef={canvasRef}
+          onAddElement={onAddElement}
+          onClose={() => setShowTextEditor(false)}
+        />
+      )}
       <Toolbar
         onBackgroundChange={onBackgroundChange}
-        onAddText={onAddText}
+        onAddText={() => setShowTextEditor(true)}
         onDownload={onDownload}
       />
       <div

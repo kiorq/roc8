@@ -13,7 +13,8 @@ const LINE_SPACING = 15;
  */
 export const makeDrawableText = (
   canvas: HTMLCanvasElement,
-  elementAttrs: DrawableText["attrs"]
+  elementAttrs: DrawableText["attrs"],
+  drawAtCenter: bool
 ): DrawableText => {
   const context = canvas.getContext("2d")!;
   const maxWidth = canvas.width - TEXT_MAX_WIDTH_SAFETY_MARGIN;
@@ -39,14 +40,14 @@ export const makeDrawableText = (
 
     // Check if the line is longer than the max length
     if (context.measureText(currentLine).width > maxWidth) {
-      // Keep track of the largest line
-      if (metrics.width > linesWidth) {
-        linesWidth = metrics.width;
-      }
-
       // Add as a line and reset
       lines.push(currentLine);
       currentLine = "";
+    }
+
+    // Keep track of the largest line
+    if (metrics.width > linesWidth) {
+      linesWidth = metrics.width;
     }
   }
 
@@ -59,12 +60,22 @@ export const makeDrawableText = (
   // Determine width and height
   const height = lines.length * lineHeightWithSpacing;
 
+  let startingX = 0;
+  let startingY = 0;
+
+  if (drawAtCenter) {
+    startingX = canvas.width / 2 - linesWidth / 2;
+    startingY = canvas.height / 2 - height / 2;
+  }
+
+  console.log("linesWidth", linesWidth);
+
   return {
     type: "text",
     attrs: {
       ...elementAttrs,
     },
-    pos: { x: 0, y: 0 },
+    pos: { x: startingX, y: startingY },
     layout: {
       text: {
         lines,

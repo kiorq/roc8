@@ -1,7 +1,6 @@
 import { MouseEvent, useCallback, useEffect, useRef, useState } from "react";
 import { DrawableBackground, DrawableElement } from "../elements";
 import { drawElements } from "../drawers/engine";
-import { makeDrawableText } from "../drawers/text";
 import {
   ALLOWED_BACKGROUND_STYLES,
   makeDrawableBackground,
@@ -62,24 +61,8 @@ const useCanvas = (props: { width: number; height: number }) => {
     );
   }, [bgElement.attrs.style]);
 
-  /**
-   * adds a text to canvas
-   * TODO: it since now we have makeDrawableX functions, this can be more generic
-   * like onAddElement instead, giving the toolbar and other ui component more
-   * control on what it can add and simplifying the hook, but we are still developing here!
-   */
-  const onAddText = () => {
-    setElements((elements) => [
-      ...elements,
-      makeDrawableText(canvasRef.current!, {
-        value:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.",
-        fontFamily: "Arial",
-        fontSize: 20,
-        align: "left",
-        color: "black",
-      }),
-    ]);
+  const onAddElement = (element: DrawableElement) => {
+    setElements((elements) => [...elements, element]);
   };
 
   const onDownload = () => {
@@ -162,7 +145,7 @@ const useCanvas = (props: { width: number; height: number }) => {
   return {
     canvasRef,
     onBackgroundChange,
-    onAddText,
+    onAddElement,
     onDownload,
     onCanvasClick,
     onCanvasDragStart,

@@ -1,22 +1,10 @@
+import Button from "../../components/Button";
+
 interface Props {
   onBackgroundChange: () => void;
   onAddText: () => void;
   onDownload: () => void;
 }
-
-interface ToolbarBtnProps {
-  onClick: React.MouseEventHandler<HTMLButtonElement>;
-  content: string | React.ReactNode;
-}
-
-const ToolbarBtn = (props: ToolbarBtnProps) => (
-  <button
-    onClick={props.onClick}
-    className="rounded-full aspect-square w-10 pointer-events-auto flex items-center justify-center text-xl text-white drop-shadow-lg bg-black/30"
-  >
-    {props.content}
-  </button>
-);
 
 const Toolbar = (props: Props) => {
   return (
@@ -24,7 +12,7 @@ const Toolbar = (props: Props) => {
       <div className="rounded-full aspect-square w-10 pointer-events-auto flex items-center justify-center text-4xl bg-black/30">
         🚀
       </div>
-      <ToolbarBtn
+      <Button
         onClick={props.onBackgroundChange}
         content={
           <svg
@@ -40,8 +28,8 @@ const Toolbar = (props: Props) => {
           </svg>
         }
       />
-      <ToolbarBtn onClick={props.onAddText} content="Aa" />
-      <ToolbarBtn
+      <Button onClick={props.onAddText} content="Aa" />
+      <Button
         onClick={() => {}}
         content={
           <svg
@@ -57,7 +45,7 @@ const Toolbar = (props: Props) => {
           </svg>
         }
       />
-      <ToolbarBtn
+      <Button
         onClick={props.onDownload}
         content={
           <svg
