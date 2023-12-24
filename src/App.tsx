@@ -3,7 +3,7 @@ import Canvas from "./canvas/components/Canvas";
 import "./index.css";
 import Toolbar from "./canvas/components/Toolbar";
 import useCanvas from "./canvas/hooks";
-import TextEditor from "./components/TextEditor";
+import TextEditor from "./textEditor/TextEditor";
 
 function App() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -38,7 +38,7 @@ function App() {
   });
 
   return (
-    <div className="w-screen h-[100dvh] max-w-[700px] mx-auto flex flex-col">
+    <div className="w-screen h-[100dvh] max-w-[700px] mx-auto flex flex-col overflow-hidden">
       {showTextEditor && (
         <TextEditor
           canvasRef={canvasRef}

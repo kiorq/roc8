@@ -1,7 +1,8 @@
 import { useCallback, useState } from "react";
-import Button from "./Button";
+import Button from "../components/Button";
 import { DrawableElement } from "../elements";
 import { makeDrawableText } from "../drawers/text";
+import SizeSlider from "./sizeSlider";
 
 const AVAILABLE_FONTS = [
   "Arial",
@@ -9,6 +10,8 @@ const AVAILABLE_FONTS = [
   "'Alfa Slab One', serif",
   "'DM Serif Display'",
 ];
+const MAX_FONT_SIZE = 100;
+const MIN_FONT_SIZE = 20;
 
 const AVAILABLE_COLORS = [
   "#FFFFFF",
@@ -28,32 +31,31 @@ interface TextEditorProps {
 }
 
 const TextEditor = ({ canvasRef, onAddElement, onClose }: TextEditorProps) => {
-  const [fontSize, setFontSize] = useState(20);
+  const [fontSize, setFontSize] = useState(MIN_FONT_SIZE);
   const [fontFamily, setFontFamily] = useState(AVAILABLE_FONTS[0]);
   const [color, setColor] = useState(AVAILABLE_COLORS[0]);
   const [content, setContent] = useState("");
   const closeOnly = content.trim() == "";
 
   const onClick = useCallback(() => {
-    if (content.trim() == "") {
-      return;
+    if (content.trim() != "") {
+      if (canvasRef.current) {
+        onAddElement(
+          makeDrawableText(
+            canvasRef.current,
+            {
+              value: content,
+              fontFamily: fontFamily,
+              fontSize: fontSize,
+              align: "left",
+              color,
+            },
+            true
+          )
+        );
+      }
     }
-    if (canvasRef.current) {
-      onAddElement(
-        makeDrawableText(
-          canvasRef.current,
-          {
-            value: content,
-            fontFamily: fontFamily,
-            fontSize: fontSize,
-            align: "left",
-            color,
-          },
-          true
-        )
-      );
-      onClose();
-    }
+    onClose();
   }, [canvasRef, onAddElement, onClose, fontFamily, fontSize, content, color]);
 
   return (
@@ -66,6 +68,12 @@ const TextEditor = ({ canvasRef, onAddElement, onClose }: TextEditorProps) => {
         onInput={(e) => setContent(e.target.textContent)}
       ></div>
       <div className="absolute bottom-0 left-0 w-full flex flex-col gap-3 py-4 px-5">
+        <SizeSlider
+          size={fontSize}
+          max={MAX_FONT_SIZE}
+          onChange={setFontSize}
+        />
+
         <div className="w-full flex flex-row gap-3">
           {AVAILABLE_FONTS.map((fontFamily, i) => (
             <Button

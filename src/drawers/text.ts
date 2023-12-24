@@ -14,7 +14,7 @@ const LINE_SPACING = 15;
 export const makeDrawableText = (
   canvas: HTMLCanvasElement,
   elementAttrs: DrawableText["attrs"],
-  drawAtCenter: bool
+  drawAtCenter: boolean
 ): DrawableText => {
   const context = canvas.getContext("2d")!;
   const maxWidth = canvas.width - TEXT_MAX_WIDTH_SAFETY_MARGIN;

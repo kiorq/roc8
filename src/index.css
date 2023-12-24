@@ -14,3 +14,7 @@ body {
   overscroll-behavior-y: none;
   overscroll-behavior-x: none;
 }
+
+.clip-triangle-left {
+  clip-path: polygon(100% 0, 0 50%, 100% 100%);
+}
