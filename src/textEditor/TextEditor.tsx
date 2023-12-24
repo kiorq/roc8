@@ -58,6 +58,13 @@ const TextEditor = ({ canvasRef, onAddElement, onClose }: TextEditorProps) => {
     onClose();
   }, [canvasRef, onAddElement, onClose, fontFamily, fontSize, content, color]);
 
+  const onInput = (e: React.FormEvent<HTMLDivElement>) => {
+    if ("textContent" in e.target) {
+      const textContent = e.target.textContent as string;
+      setContent(textContent);
+    }
+  };
+
   return (
     <div className="absolute left-0 top-0 z-50 w-[100dvw] h-[100dvh] max-h-full bg-black/70 select-none">
       <div
@@ -65,7 +72,7 @@ const TextEditor = ({ canvasRef, onAddElement, onClose }: TextEditorProps) => {
         className={`w-full h-full flex items-center justify-center drop-shadow-xl outline-none px-5 empty:caret-transparent empty:!text-white/40 empty:before:content-['WriteSomething']`}
         autoFocus={true}
         style={{ fontSize: `${fontSize}pt`, fontFamily, color }}
-        onInput={(e) => setContent(e.target.textContent)}
+        onInput={onInput}
       ></div>
       <div className="absolute bottom-0 left-0 w-full flex flex-col gap-3 py-4 px-5">
         <SizeSlider

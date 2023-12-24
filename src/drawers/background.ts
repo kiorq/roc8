@@ -24,6 +24,8 @@ export const makeDrawableBackground = (
   attrs: {
     ...elementAttrs,
   },
+  pos: { x: 0, y: 0 },
+  layout: { dimensions: { width: 0, height: 0 } },
 });
 
 const getStyle = (

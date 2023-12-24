@@ -90,7 +90,7 @@ export const makeDrawableText = (
 };
 
 export const drawText = (
-  canvas: HTMLCanvasElement,
+  _canvas: HTMLCanvasElement,
   context: CanvasRenderingContext2D,
   element: DrawableText
 ) => {
