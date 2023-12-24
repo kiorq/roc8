@@ -38,7 +38,7 @@ function App() {
   });
 
   return (
-    <div className="w-screen h-[100dvh] max-w-[700px] mx-auto flex flex-col overflow-hidden">
+    <div className="w-screen h-[100dvh] max-w-[700px] mx-auto flex flex-col overflow-hidden touch-none">
       {showTextEditor && (
         <TextEditor
           canvasRef={canvasRef}
