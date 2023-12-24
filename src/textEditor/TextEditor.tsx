@@ -2,7 +2,7 @@ import { useCallback, useState } from "react";
 import Button from "../components/Button";
 import { DrawableElement } from "../elements";
 import { makeDrawableText } from "../drawers/text";
-import SizeSlider from "./sizeSlider";
+import SizeSlider from "./SizeSlider";
 
 const AVAILABLE_FONTS = [
   "Arial",
@@ -59,7 +59,7 @@ const TextEditor = ({ canvasRef, onAddElement, onClose }: TextEditorProps) => {
   }, [canvasRef, onAddElement, onClose, fontFamily, fontSize, content, color]);
 
   return (
-    <div className="absolute left-0 top-0 z-50 w-[100dvw] h-[100dvh] max-h-full bg-black/70">
+    <div className="absolute left-0 top-0 z-50 w-[100dvw] h-[100dvh] max-h-full bg-black/70 select-none">
       <div
         contentEditable={true}
         className={`w-full h-full flex items-center justify-center drop-shadow-xl outline-none px-5 empty:caret-transparent empty:!text-white/40 empty:before:content-['WriteSomething']`}

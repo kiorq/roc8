@@ -46,15 +46,14 @@ const SizeSlider = ({ size, max, onChange }: SizeSliderProps) => {
 
   const getCurrentPosition = useCallback(() => {
     const percentageCompleted = (size / max) * 100;
-    return Math.max(0, Math.min(100, percentageCompleted)); // 100% == 1.0
+    return Math.max(0, Math.min(95, percentageCompleted)); // 100% == 1.0
   }, [size, max]);
 
   const currentPosition = getCurrentPosition();
-  console.log("currentPosition", currentPosition);
 
   return (
     <div
-      className="w-full relative h-8 flex items-center justify-center"
+      className="w-full md:max-w-[400px] relative h-8 flex items-center justify-center"
       onMouseDown={onDragStart}
       onMouseUp={onDragEnd}
       onTouchStart={onDragStart}
